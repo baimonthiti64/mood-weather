@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mood Weather 🌤️</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background 0.8s ease;
+        }
+
+        /* =========================
+           WEATHER BACKGROUNDS
+        ========================= */
+
+        body.home {
+            background: linear-gradient(135deg, #72e5e0, #69b9f5);
+        }
+
+        body.sunny {
+            background: linear-gradient(135deg, #ffd86b, #ff9f43);
+        }
+
+        body.cloudy {
+            background: linear-gradient(135deg, #aeb8c2, #7f8c9a);
+        }
+
+        body.rainy {
+            background: linear-gradient(135deg, #7897b5, #3e5870);
+        }
+
+        body.storm {
+            background: linear-gradient(135deg, #353b48, #18202b);
+        }
+
+        body.rainbow {
+            background: linear-gradient(135deg, #69e1d7, #62b7ee);
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .app {
+            width: min(92%, 760px);
+            position: relative;
+            z-index: 5;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.42);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 35px;
+            padding: 50px 45px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+            border: 1px solid rgba(255,255,255,0.35);
+            animation: appear 0.6s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-size: clamp(40px, 7vw, 68px);
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: clamp(30px, 6vw, 52px);
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        button {
+            border: none;
+            background: white;
+            padding: 17px 30px;
+            border-radius: 18px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: 0.25s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+
+        .secondary {
+            background: rgba(255,255,255,0.65);
+            margin-left: 8px;
+        }
+
+        /* =========================
+           HOME
+        ========================= */
+
+        .logo {
+            font-size: 75px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            margin-bottom: 10px;
+        }
+
+        .small-text {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 18px;
+        }
+
+        /* =========================
+           QUESTION
+        ========================= */
+
+        .progress {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .question {
+            font-size: 27px;
+            font-weight: bold;
+            margin: 25px 0;
+            line-height: 1.5;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .answer {
+            margin: 0;
+            width: 100%;
+            text-align: left;
+            background: rgba(255,255,255,0.7);
+        }
+
+        .answer:hover {
+            background: white;
+        }
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .weather-icon {
+            font-size: 120px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 12px 0 20px;
+        }
+
+        .message {
+            font-size: 20px;
+            line-height: 1.9;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           HISTORY
+        ========================= */
+
+        .history-list {
+            margin-top: 25px;
+            max-height: 350px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .history-item {
+            background: rgba(255,255,255,0.55);
+            padding: 15px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+        }
+
+        .history-item strong {
+            font-size: 19px;
+        }
+
+        .history-date {
+            font-size: 13px;
+            opacity: 0.65;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           WEATHER EFFECTS
+        ========================= */
+
+        .effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sun {
+            position: fixed;
+            top: 8%;
+            right: 10%;
+            font-size: 100px;
+            animation: spin 15s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rain {
+            position: fixed;
+            top: -20px;
+            color: rgba(255,255,255,0.6);
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-30px);
+            }
+
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            color: white;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.2;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 35px 22px;
+                border-radius: 28px;
+            }
+
+            p {
+                font-size: 17px;
+            }
+
+            .question {
+                font-size: 22px;
+            }
+
+            .weather-icon {
+                font-size: 90px;
+            }
+
+            button {
+                font-size: 16px;
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body class="home">
+
+    <div id="effects"></div>
+
+    <main class="app">
+        <div class="card" id="app"></div>
+    </main>
+
+
+<script>
+
+    /* =====================================================
+       MOOD WEATHER
+       ===================================================== */
+
+    const questions = [
+
+        {
+            question: "วันนี้พลังงานของคุณเป็นอย่างไร?",
+            answers: [
+                ["แทบไม่มีพลังเลย", 1],
+                ["ค่อนข้างเหนื่อย", 2],
+                ["ปกติดี", 3],
+                ["มีพลังมาก", 4],
+                ["พลังล้นสุด ๆ", 5]
+            ]
+        },
+
+        {
+            question: "ช่วงนี้คุณรู้สึกอยากอยู่กับคนอื่นแค่ไหน?",
+            answers: [
+                ["อยากอยู่คนเดียวมาก", 1],
+                ["อยากอยู่เงียบ ๆ", 2],
+                ["แล้วแต่สถานการณ์", 3],
+                ["อยากเจอคน", 4],
+                ["อยากพบผู้คนสุด ๆ", 5]
+            ]
+        },
+
+        {
+            question: "ตอนนี้ในหัวมีเรื่องให้คิดเยอะไหม?",
+            answers: [
+                ["เยอะมากจนล้น", 1],
+                ["ค่อนข้างเยอะ", 2],
+                ["พอประมาณ", 3],
+                ["ไม่ค่อยเยอะ", 4],
+                ["หัวโล่งมาก", 5]
+            ]
+        },
+
+        {
+            question: "คุณรู้สึกว่าควบคุมชีวิตช่วงนี้ได้มากแค่ไหน?",
+            answers: [
+                ["ควบคุมอะไรไม่ได้เลย", 1],
+                ["ค่อนข้างควบคุมยาก", 2],
+                ["พอจัดการได้", 3],
+                ["ค่อนข้างจัดการได้", 4],
+                ["ทุกอย่างอยู่ในมือ", 5]
+            ]
+        },
+
+        {
+            question: "วันนี้คุณมีช่วงเวลาที่ทำให้ตัวเองมีความสุขหรือยัง?",
+            answers: [
+                ["ยังไม่มีเลย", 1],
+                ["มีนิดหน่อย", 2],
+                ["มีบ้าง", 3],
+                ["มีหลายช่วง", 4],
+                ["มีความสุขมาก", 5]
+            ]
+        },
+
+        {
+            question: "ถ้ามีปัญหาเข้ามา คุณรู้สึกอย่างไร?",
+            answers: [
+                ["รู้สึกหนักมาก", 1],
+                ["กังวลพอสมควร", 2],
+                ["พยายามรับมือ", 3],
+                ["ค่อนข้างใจเย็น", 4],
+                ["มองว่าเป็นเรื่องที่แก้ได้", 5]
+            ]
+        },
+
+        {
+            question: "ตอนนี้คุณอยากพักให้ตัวเองมากแค่ไหน?",
+            answers: [
+                ["อยากพักมากที่สุด", 1],
+                ["อยากพักมาก", 2],
+                ["อยากพักบ้าง", 3],
+                ["ยังมีพลังทำต่อ", 4],
+                ["พร้อมลุยต่อ", 5]
+            ]
+        }
+
+    ];
+
+
+    let currentQuestion = 0;
+    let totalScore = 0;
+
+
+    /* =====================================================
+       HOME
+       ===================================================== */
+
+    function showHome() {
+
+        document.body.className = "home";
+
+        document.getElementById("app").innerHTML = `
+
+            <div class="logo">🌤️</div>
+
+            <h1>Mood Weather</h1>
+
+            <p class="subtitle">
+                วันนี้ใจของคุณเป็นสภาพอากาศแบบไหน?
+            </p>
+
+            <p>
+                สำรวจความรู้สึกของตัวเองผ่านคำถามสั้น ๆ
+                แล้วค้นพบสภาพอากาศของใจในวันนี้
+            </p>
+
+            <button onclick="startMood()">
+                เริ่มสำรวจใจของฉัน
+            </button>
+
+            <button class="secondary" onclick="showHistory()">
+                📖 ประวัติของฉัน
+            </button>
+
+            <div class="small-text">
+                * แบบทดสอบนี้จัดทำเพื่อการสะท้อนความรู้สึก
+                ไม่ใช่การวินิจฉัยทางการแพทย์
+            </div>
+
+        `;
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    function startMood() {
+
+        currentQuestion = 0;
+        totalScore = 0;
+
+        showQuestion();
+    }
+
+
+    /* =====================================================
+       QUESTIONS
+       ===================================================== */
+
+    function showQuestion() {
+
+        document.body.className = "home";
+
+        const q = questions[currentQuestion];
+
+        let answersHTML = "";
+
+        q.answers.forEach((answer) => {
+
+            answersHTML += `
+                <button class="answer"
+                    onclick="selectAnswer(${answer[1]})">
+                    ${answer[0]}
+                </button>
+            `;
+
+        });
+
+
+        document.getElementById("app").innerHTML = `
+
+            <div class="progress">
+                คำถาม ${currentQuestion + 1} / ${questions.length}
+            </div>
+
+            <div class="question">
+                ${q.question}
+            </div>
+
+            <div class="answers">
+                ${answersHTML}
+            </div>
+
+        `;
+    }
+
+
+    /* =====================================================
+       ANSWER
+       ===================================================== */
+
+    function selectAnswer(score) {
+
+        totalScore += score;
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+
+            showQuestion();
+
+        } else {
+
+            showResult();
+
+        }
+    }
+
+
+    /* =====================================================
+       RESULT
+       ===================================================== */
+
+    function showResult() {
+
+        let result;
+
+        if (totalScore >= 30) {
+
+            result = {
+                name: "Rainbow Mind",
+                icon: "🌈",
+                type: "rainbow",
+                message:
+                "วันนี้ใจของคุณมีทั้งช่วงเวลาที่สดใสและช่วงเวลาที่ต้องหยุดพัก ลองรักษาสมดุลนี้ไว้ และอย่าลืมให้พื้นที่กับตัวเองนะ"
+            };
+
+        } else if (totalScore >= 24) {
+
+            result = {
+                name: "Sunny Mind",
+                icon: "☀️",
+                type: "sunny",
+                message:
+                "วันนี้ใจของคุณค่อนข้างสดใส มีพลังและพร้อมเดินหน้าต่อ ใช้พลังนี้กับสิ่งที่สำคัญกับคุณนะ"
+            };
+
+        } else if (totalScore >= 18) {
+
+            result = {
+                name: "Cloudy Mind",
+                icon: "☁️",
+                type: "cloudy",
+                message:
+                "วันนี้อาจมีบางเรื่องที่ทำให้ใจหนักนิดหน่อย ไม่จำเป็นต้องรีบแก้ทุกอย่าง ลองค่อย ๆ จัดการทีละเรื่องนะ"
+            };
+
+        } else if (totalScore >= 12) {
+
+            result = {
+                name: "Rainy Mind",
+                icon: "🌧️",
+                type: "rainy",
+                message:
+                "วันนี้ใจอาจต้องการการพักและพื้นที่ปลอดภัย ลองลดความเร่งรีบ แล้วดูแลตัวเองทีละเล็กทีละน้อยนะ"
+            };
+
+        } else {
+
+            result = {
+                name: "Stormy Mind",
+                icon: "⛈️",
+                type: "storm",
+                message:
+                "วันนี้อาจมีหลายอย่างเข้ามาพร้อมกัน ไม่จำเป็นต้องรับมือทุกอย่างในครั้งเดียว หยุดพักและค่อย ๆ มองทีละเรื่องนะ"
+            };
+
+        }
+
+
+        document.body.className = result.type;
+
+        createWeatherEffect(result.type);
+
+        saveMoodHistory(result.name, result.icon, totalScore);
+
+
+        document.getElementById("app").innerHTML = `
+
+            <div class="weather-icon">
+                ${result.icon}
+            </div>
+
+            <h2>${result.name}</h2>
+
+            <div class="score">
+                ${totalScore} / 35 คะแนน
+            </div>
+
+            <p class="message">
+                ${result.message}
+            </p>
+
+            <button onclick="startMood()">
+                🔄 สำรวจอีกครั้ง
+            </button>
+
+            <button class="secondary" onclick="shareResult()">
+                📤 แชร์ผลลัพธ์
+            </button>
+
+            <button class="secondary" onclick="showHistory()">
+                📖 ดูประวัติ
+            </button>
+
+        `;
+    }
+
+
+    /* =====================================================
+       SAVE HISTORY
+    ===================================================== */
+
+    function saveMoodHistory(result, icon, score) {
+
+        let history =
+            JSON.parse(localStorage.getItem("moodHistory")) || [];
+
+
+        const record = {
+
+            date: new Date().toLocaleString("th-TH"),
+
+            result: result,
+
+            icon: icon,
+
+            score: score
+
+        };
+
+
+        history.unshift(record);
+
+
+        /* เก็บแค่ 20 ครั้งล่าสุด */
+
+        history = history.slice(0, 20);
+
+
+        localStorage.setItem(
+            "moodHistory",
+            JSON.stringify(history)
+        );
+    }
+
+
+    /* =====================================================
+       SHOW HISTORY
+    ===================================================== */
+    function shareResult() {
+    const shareText =
+        `🌤️ Mood Weather\n` +
+        `วันนี้ฉันได้ผลลัพธ์: ${result.title}\n` +
+        `คะแนน: ${totalScore} / 35\n\n` +
+        `${result.message}\n\n` +
+        `ลองสำรวจสภาพอากาศในใจของคุณด้วย Mood Weather ☁️`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: "Mood Weather",
+            text: shareText
+        });
+    } else {
+        navigator.clipboard.writeText(shareText);
+        alert("คัดลอกผลลัพธ์แล้ว! 📋");
+    }
+}
+    function showHistory() {
+
+        document.body.className = "home";
+
+
+        const history =
+            JSON.parse(localStorage.getItem("moodHistory")) || [];
+
+
+        if (history.length === 0) {
+
+            document.getElementById("app").innerHTML = `
+
+                <div class="logo">📖</div>
+
+                <h2>ประวัติของฉัน</h2>
+
+                <p>
+                    ยังไม่มีประวัติการสำรวจค่ะ 🌱
+                </p>
+
+                <button onclick="startMood()">
+                    เริ่มสำรวจครั้งแรก
+                </button>
+
+                <button class="secondary" onclick="showHome()">
+                    🏠 กลับหน้าหลัก
+                </button>
+
+            `;
+
+            return;
+        }
+
+
+        let historyHTML = "";
+
+
+        history.forEach((item, index) => {
+
+            historyHTML += `
+
+                <div class="history-item">
+
+                    <strong>
+                        ${item.icon} ${item.result}
+                    </strong>
+
+                    <div>
+                        ${item.score} / 35 คะแนน
+                    </div>
+
+                    <div class="history-date">
+                        ${item.date}
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+
+        document.getElementById("app").innerHTML = `
+
+            <div class="logo">📖</div>
+
+            <h2>ประวัติของฉัน</h2>
+
+            <p>
+                ผลการสำรวจที่ผ่านมา
+            </p>
+
+            <div class="history-list">
+                ${historyHTML}
+            </div>
+
+            <button onclick="startMood()">
+                🌈 สำรวจอีกครั้ง
+            </button>
+
+            <button class="secondary" onclick="clearHistory()">
+                🗑️ ล้างประวัติ
+            </button>
+
+            <button class="secondary" onclick="showHome()">
+                🏠 หน้าหลัก
+            </button>
+
+        `;
+    }
+
+
+    /* =====================================================
+       CLEAR HISTORY
+    ===================================================== */
+
+    function clearHistory() {
+
+        const confirmDelete =
+            confirm("ต้องการล้างประวัติทั้งหมดหรือไม่?");
+
+
+        if (confirmDelete) {
+
+            localStorage.removeItem("moodHistory");
+
+            showHistory();
+
+        }
+    }
+
+
+    /* =====================================================
+       WEATHER EFFECTS
+    ===================================================== */
+
+    function createWeatherEffect(type) {
+
+        const effects =
+            document.getElementById("effects");
+
+
+        effects.innerHTML = "";
+
+
+        /* SUNNY */
+
+        if (type === "sunny") {
+
+            const sun = document.createElement("div");
+
+            sun.className = "sun";
+
+            sun.innerHTML = "☀️";
+
+            effects.appendChild(sun);
+
+        }
+
+
+        /* RAIN */
+
+        if (type === "rainy" || type === "storm") {
+
+            for (let i = 0; i < 35; i++) {
+
+                const drop =
+                    document.createElement("div");
+
+                drop.className = "rain";
+
+                drop.innerHTML = "│";
+
+                drop.style.left =
+                    Math.random() * 100 + "%";
+
+                drop.style.animationDuration =
+                    (0.7 + Math.random() * 1.2) + "s";
+
+                drop.style.animationDelay =
+                    Math.random() * 2 + "s";
+
+                effects.appendChild(drop);
+            }
+        }
+
+
+        /* RAINBOW STARS */
+
+        if (type === "rainbow") {
+
+            const stars =
+                document.createElement("div");
+
+            stars.className = "stars";
+
+
+            for (let i = 0; i < 35; i++) {
+
+                const star =
+                    document.createElement("div");
+
+                star.className = "star";
+
+                star.innerHTML = "✦";
+
+                star.style.left =
+                    Math.random() * 100 + "%";
+
+                star.style.top =
+                    Math.random() * 100 + "%";
+
+                star.style.fontSize =
+                    (8 + Math.random() * 12) + "px";
+
+                star.style.animationDelay =
+                    Math.random() * 2 + "s";
+
+                stars.appendChild(star);
+            }
+
+
+            effects.appendChild(stars);
+        }
+    }
+
+
+    /* =====================================================
+       START PROGRAM
+    ===================================================== */
+
+    showHome();
+
+</script>
+
+</body>
+</html>
