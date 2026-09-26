@@ -1,84 +1,235 @@
 /* =========================================================
    MOOD WEATHER V2
-   Main JavaScript
+   เวอร์ชันฮีลใจ
+   ========================================================= */
+
+
+/* =========================================================
+   คำถาม
    ========================================================= */
 
 const questions = [
   {
     text: "วันนี้ตื่นมารู้สึกยังไงกับตัวเอง?",
     answers: [
-      { text: "สดใส พร้อมลุยมาก", score: 5, icon: "☀️" },
-      { text: "โอเค เรื่อย ๆ", score: 4, icon: "🌤️" },
-      { text: "ยังมึน ๆ อยู่", score: 3, icon: "☁️" },
-      { text: "รู้สึกเหนื่อย", score: 2, icon: "🌧️" },
-      { text: "ไม่ค่อยไหวเลย", score: 1, icon: "⛈️" }
+      {
+        text: "สดใสและพร้อมเริ่มต้นวันใหม่",
+        score: 5,
+        icon: "☀️"
+      },
+      {
+        text: "โอเค ค่อย ๆ ไปก็ได้",
+        score: 4,
+        icon: "🌤️"
+      },
+      {
+        text: "ยังมึน ๆ อยากใช้เวลาสักหน่อย",
+        score: 3,
+        icon: "☁️"
+      },
+      {
+        text: "รู้สึกเหนื่อยตั้งแต่เริ่มวัน",
+        score: 2,
+        icon: "🌧️"
+      },
+      {
+        text: "วันนี้ไม่ค่อยไหวเลย",
+        score: 1,
+        icon: "⛈️"
+      }
     ]
   },
+
   {
-    text: "ช่วงนี้พลังงานของพี่เป็นแบบไหน?",
+    text: "ช่วงนี้หัวใจของคุณกำลังเป็นแบบไหน?",
     answers: [
-      { text: "พลังเหลือล้น", score: 5, icon: "⚡" },
-      { text: "มีพลังพอดี", score: 4, icon: "✨" },
-      { text: "ขึ้น ๆ ลง ๆ", score: 3, icon: "〰️" },
-      { text: "หมดแรงง่าย", score: 2, icon: "🫠" },
-      { text: "อยากพักจริง ๆ", score: 1, icon: "🛌" }
+      {
+        text: "มีพลังและอยากทำอะไรหลายอย่าง",
+        score: 5,
+        icon: "✨"
+      },
+      {
+        text: "สบาย ๆ ใช้ชีวิตไปทีละวัน",
+        score: 4,
+        icon: "🌿"
+      },
+      {
+        text: "บางวันดี บางวันก็เหนื่อย",
+        score: 3,
+        icon: "〰️"
+      },
+      {
+        text: "รู้สึกหมดพลังง่ายกว่าปกติ",
+        score: 2,
+        icon: "🫠"
+      },
+      {
+        text: "อยากหยุดพักจากทุกอย่างสักพัก",
+        score: 1,
+        icon: "🛌"
+      }
     ]
   },
+
   {
-    text: "ถ้ามีเรื่องไม่คาดคิดเกิดขึ้น พี่รับมือยังไง?",
+    text: "ถ้ามีเรื่องไม่คาดคิดเกิดขึ้น คุณมักจะทำอย่างไร?",
     answers: [
-      { text: "เอาอยู่ ค่อย ๆ แก้", score: 5, icon: "💪" },
-      { text: "กังวลนิดหน่อยแต่จัดการได้", score: 4, icon: "🌱" },
-      { text: "ต้องใช้เวลาตั้งหลัก", score: 3, icon: "🧘" },
-      { text: "รู้สึกกดดันมาก", score: 2, icon: "😵‍💫" },
-      { text: "เหมือนทุกอย่างถาโถมเข้ามา", score: 1, icon: "🌪️" }
+      {
+        text: "ค่อย ๆ ตั้งสติแล้วแก้ไปทีละเรื่อง",
+        score: 5,
+        icon: "🌱"
+      },
+      {
+        text: "กังวลบ้าง แต่ยังพอรับมือได้",
+        score: 4,
+        icon: "💛"
+      },
+      {
+        text: "ขอเวลาตั้งหลักก่อน",
+        score: 3,
+        icon: "🧘"
+      },
+      {
+        text: "รู้สึกกดดันจนไม่รู้จะเริ่มตรงไหน",
+        score: 2,
+        icon: "😵‍💫"
+      },
+      {
+        text: "รู้สึกเหมือนทุกอย่างถาโถมเข้ามาพร้อมกัน",
+        score: 1,
+        icon: "🌪️"
+      }
     ]
   },
+
   {
-    text: "ตอนนี้สิ่งที่พี่อยากได้มากที่สุดคืออะไร?",
+    text: "ตอนนี้สิ่งที่หัวใจอยากได้มากที่สุดคืออะไร?",
     answers: [
-      { text: "โอกาสใหม่ ๆ", score: 5, icon: "🌈" },
-      { text: "เวลาให้ตัวเอง", score: 4, icon: "🌿" },
-      { text: "ความชัดเจน", score: 3, icon: "🔎" },
-      { text: "การพักผ่อน", score: 2, icon: "☕" },
-      { text: "อยากหนีไปพักก่อน", score: 1, icon: "🏝️" }
+      {
+        text: "โอกาสใหม่ ๆ และแรงบันดาลใจ",
+        score: 5,
+        icon: "🌈"
+      },
+      {
+        text: "เวลาให้ตัวเองได้หายใจ",
+        score: 4,
+        icon: "🍃"
+      },
+      {
+        text: "ความชัดเจนในสิ่งที่กำลังเจอ",
+        score: 3,
+        icon: "🔎"
+      },
+      {
+        text: "การพักผ่อนแบบไม่ต้องรู้สึกผิด",
+        score: 2,
+        icon: "☕"
+      },
+      {
+        text: "อยากวางทุกอย่างลงแล้วพักก่อน",
+        score: 1,
+        icon: "🏝️"
+      }
     ]
   },
+
   {
-    text: "ช่วงนี้พี่มองอนาคตของตัวเองแบบไหน?",
+    text: "เมื่อมองไปข้างหน้า คุณรู้สึกอย่างไร?",
     answers: [
-      { text: "ตื่นเต้นและมีความหวัง", score: 5, icon: "🚀" },
-      { text: "ค่อนข้างมั่นใจ", score: 4, icon: "🌅" },
-      { text: "ยังไม่แน่ใจ", score: 3, icon: "🌫️" },
-      { text: "ค่อนข้างกังวล", score: 2, icon: "🌧️" },
-      { text: "ยังมองไม่เห็นทาง", score: 1, icon: "🌑" }
+      {
+        text: "รู้สึกตื่นเต้นและมีความหวัง",
+        score: 5,
+        icon: "🚀"
+      },
+      {
+        text: "เชื่อว่าทุกอย่างจะค่อย ๆ ดีขึ้น",
+        score: 4,
+        icon: "🌅"
+      },
+      {
+        text: "ยังไม่รู้ แต่พร้อมค่อย ๆ ค้นหา",
+        score: 3,
+        icon: "🌫️"
+      },
+      {
+        text: "มีหลายเรื่องที่ทำให้กังวล",
+        score: 2,
+        icon: "🌧️"
+      },
+      {
+        text: "ตอนนี้ยังมองไม่เห็นทางเลย",
+        score: 1,
+        icon: "🌑"
+      }
     ]
   },
+
   {
-    text: "ถ้าให้เลือกคำหนึ่งคำแทนใจตอนนี้ จะเลือกอะไร?",
+    text: "ถ้าให้เลือกหนึ่งคำแทนความรู้สึกตอนนี้ จะเลือกคำไหน?",
     answers: [
-      { text: "เบิกบาน", score: 5, icon: "🌻" },
-      { text: "สบายใจ", score: 4, icon: "🍃" },
-      { text: "สับสน", score: 3, icon: "🌀" },
-      { text: "เหนื่อย", score: 2, icon: "🌧️" },
-      { text: "หนัก", score: 1, icon: "⛈️" }
+      {
+        text: "เบิกบาน",
+        score: 5,
+        icon: "🌻"
+      },
+      {
+        text: "สบายใจ",
+        score: 4,
+        icon: "🍃"
+      },
+      {
+        text: "สับสน",
+        score: 3,
+        icon: "🌀"
+      },
+      {
+        text: "เหนื่อย",
+        score: 2,
+        icon: "🌧️"
+      },
+      {
+        text: "หนักใจ",
+        score: 1,
+        icon: "🤍"
+      }
     ]
   },
+
   {
-    text: "คืนนี้พี่อยากบอกอะไรกับตัวเอง?",
+    text: "ถ้าคืนนี้ได้ฝากข้อความหนึ่งประโยคไว้ให้ตัวเอง คุณอยากบอกว่าอะไร?",
     answers: [
-      { text: "เราทำได้ดีแล้ว", score: 5, icon: "💖" },
-      { text: "ค่อย ๆ ไปก็ได้", score: 4, icon: "🌱" },
-      { text: "พรุ่งนี้ค่อยคิด", score: 3, icon: "🌙" },
-      { text: "ขอพักก่อนนะ", score: 2, icon: "🫶" },
-      { text: "วันนี้มันหนักจริง ๆ", score: 1, icon: "🤍" }
+      {
+        text: "เราทำดีที่สุดแล้วนะ",
+        score: 5,
+        icon: "💖"
+      },
+      {
+        text: "ค่อย ๆ ไปก็ได้ ไม่ต้องรีบ",
+        score: 4,
+        icon: "🌱"
+      },
+      {
+        text: "พรุ่งนี้ค่อยคิด วันนี้พักก่อน",
+        score: 3,
+        icon: "🌙"
+      },
+      {
+        text: "เหนื่อยได้ พักได้ ไม่ต้องรู้สึกผิด",
+        score: 2,
+        icon: "🫶"
+      },
+      {
+        text: "วันนี้มันหนักจริง ๆ และเราผ่านมันมาแล้ว",
+        score: 1,
+        icon: "🤍"
+      }
     ]
   }
 ];
 
 
 /* =========================================================
-   RESULT TYPES
+   ผลลัพธ์
    ========================================================= */
 
 const results = [
@@ -90,7 +241,7 @@ const results = [
     title: "Sunny Mind",
     label: "ท้องฟ้าสดใส",
     message:
-      "ช่วงนี้ใจของพี่มีพลังและความหวังอยู่พอสมควร เหมาะกับการค่อย ๆ ใช้พลังนั้นไปกับสิ่งที่สำคัญกับตัวเองค่ะ",
+      "วันนี้หัวใจมีแสงสว่างอยู่ในตัวเองนะ 🌻 ใช้พลังที่มีไปกับสิ่งที่สำคัญกับคุณ และอย่าลืมว่าไม่จำเป็นต้องเก่งหรือเข้มแข็งตลอดเวลา แค่เป็นตัวเองในแบบที่สบายใจก็เพียงพอแล้ว",
     color: "#ffd76a"
   },
 
@@ -102,7 +253,7 @@ const results = [
     title: "Rainbow Mind",
     label: "หลังฝนมีสีรุ้ง",
     message:
-      "แม้จะมีบางเรื่องที่ยังไม่สมบูรณ์ แต่พี่กำลังมองเห็นความเป็นไปได้ใหม่ ๆ อยู่ อย่าลืมให้เครดิตตัวเองกับสิ่งที่ผ่านมาด้วยนะ",
+      "บางช่วงของชีวิตอาจไม่ได้สวยงามทุกวัน แต่หลังฝนย่อมมีท้องฟ้าใหม่เสมอ 🌈 สิ่งที่กำลังพยายามอยู่มีความหมาย และวันนี้ก็เก่งมากแล้วที่ยังเดินต่อมาได้",
     color: "#b69cff"
   },
 
@@ -114,7 +265,7 @@ const results = [
     title: "Cloudy Mind",
     label: "เมฆลอยผ่าน",
     message:
-      "ใจอาจกำลังอยู่ในช่วงที่ต้องการความชัดเจนมากขึ้น ไม่จำเป็นต้องรีบหาคำตอบทุกอย่างในวันนี้ก็ได้ค่ะ",
+      "ถ้าวันนี้ยังมองอะไรไม่ชัดก็ไม่เป็นไรนะ ☁️ บางคำตอบไม่จำเป็นต้องเกิดขึ้นในวันนี้ ลองพักหายใจ แล้วปล่อยให้เวลาและหัวใจค่อย ๆ พาไป",
     color: "#9db6ca"
   },
 
@@ -126,7 +277,7 @@ const results = [
     title: "Rainy Mind",
     label: "ฝนกำลังตก",
     message:
-      "บางทีใจอาจกำลังขอพื้นที่ให้ตัวเองพัก ลองลดความคาดหวังลงสักนิด แล้วดูแลตัวเองเหมือนที่เราจะดูแลคนที่เรารักค่ะ",
+      "ถ้าวันนี้เหนื่อย ก็พักได้เลยนะ 🌧️ การดูแลหัวใจตัวเองไม่ใช่ความอ่อนแอ ไม่จำเป็นต้องรีบกลับมาเข้มแข็ง และพรุ่งนี้ค่อยเริ่มใหม่ก็ยังทันเสมอ",
     color: "#7eb8e8"
   },
 
@@ -138,24 +289,19 @@ const results = [
     title: "Stormy Mind",
     label: "พายุในใจ",
     message:
-      "ช่วงนี้อาจมีหลายอย่างเกิดขึ้นพร้อมกันจนรู้สึกหนักได้ ไม่จำเป็นต้องจัดการทุกอย่างในครั้งเดียว ลองเลือกเพียงเรื่องเล็ก ๆ หนึ่งเรื่องก่อนค่ะ",
+      "ถ้าวันนี้รู้สึกหนักมาก ขอให้รู้ไว้ว่าความรู้สึกนี้ไม่จำเป็นต้องอยู่กับเราตลอดไป ⛈️ ค่อย ๆ หายใจ ค่อย ๆ ผ่านช่วงเวลานี้ไปทีละนิด ไม่ต้องแก้ทุกอย่างในวันนี้ก็ได้",
     color: "#9b9cff"
   }
 ];
 
 
 /* =========================================================
-   STATE
+   ตัวแปรหลัก
    ========================================================= */
 
 let currentQuestion = 0;
 let answers = [];
 let totalScore = 0;
-
-
-/* =========================================================
-   DOM
-   ========================================================= */
 
 const app = document.getElementById("app");
 
@@ -166,6 +312,7 @@ const app = document.getElementById("app");
 
 function render(html) {
   app.innerHTML = html;
+
   window.scrollTo({
     top: 0,
     behavior: "smooth"
@@ -174,10 +321,11 @@ function render(html) {
 
 
 /* =========================================================
-   HOME
+   หน้าแรก
    ========================================================= */
 
 function showHome() {
+
   document.body.className =
     document.body.classList.contains("light")
       ? "home light"
@@ -195,16 +343,18 @@ function showHome() {
         </div>
 
         <h1>
-          วันนี้ใจของพี่
+          วันนี้ใจของคุณ
           <br>
-          <span class="gradient-text">อากาศแบบไหน?</span>
+          <span class="gradient-text">
+            อากาศแบบไหน?
+          </span>
         </h1>
 
         <p>
           ลองใช้เวลาไม่กี่นาทีเช็กอินกับตัวเอง
           ผ่านคำถามง่าย ๆ 7 ข้อ
-          แล้วดูว่าวันนี้ “สภาพอากาศของใจ”
-          ของพี่เป็นแบบไหน ☁️
+          แล้วมาดูกันว่าวันนี้
+          “สภาพอากาศของใจ” เป็นแบบไหน ☁️
         </p>
 
         <div class="hero-actions">
@@ -260,10 +410,11 @@ function showHome() {
 
 
 /* =========================================================
-   START
+   เริ่มทำแบบประเมิน
    ========================================================= */
 
 function startMood() {
+
   currentQuestion = 0;
   answers = [];
   totalScore = 0;
@@ -273,14 +424,16 @@ function startMood() {
 
 
 /* =========================================================
-   QUESTION
+   แสดงคำถาม
    ========================================================= */
 
 function showQuestion() {
-  const question = questions[currentQuestion];
+
+  const question =
+    questions[currentQuestion];
 
   const progress =
-    ((currentQuestion) / questions.length) * 100;
+    (currentQuestion / questions.length) * 100;
 
   render(`
     <section class="question-wrap">
@@ -315,7 +468,9 @@ function showQuestion() {
       <div class="question-card">
 
         <div class="question-number">
-          QUESTION ${String(currentQuestion + 1).padStart(2, "0")}
+          QUESTION ${String(
+            currentQuestion + 1
+          ).padStart(2, "0")}
         </div>
 
         <h2>
@@ -327,6 +482,7 @@ function showQuestion() {
           ${question.answers
             .map(
               (answer, index) => `
+
                 <button
                   class="answer-btn"
                   onclick="selectAnswer(${index})"
@@ -349,6 +505,7 @@ function showQuestion() {
                   </span>
 
                 </button>
+
               `
             )
             .join("")}
@@ -363,50 +520,66 @@ function showQuestion() {
 
 
 /* =========================================================
-   SELECT ANSWER
+   เลือกคำตอบ
    ========================================================= */
 
 function selectAnswer(answerIndex) {
+
   const selected =
-    questions[currentQuestion].answers[answerIndex];
+    questions[currentQuestion]
+      .answers[answerIndex];
 
   answers.push(selected);
+
   totalScore += selected.score;
 
   currentQuestion++;
 
-  if (currentQuestion < questions.length) {
+  if (
+    currentQuestion <
+    questions.length
+  ) {
+
     showQuestion();
+
   } else {
+
     showResult();
+
   }
 }
 
 
 /* =========================================================
-   GET RESULT
+   หาผลลัพธ์
    ========================================================= */
 
 function getResult(score) {
+
   return (
     results.find(
       result =>
         score >= result.min &&
         score <= result.max
-    ) || results[results.length - 1]
+    ) ||
+    results[results.length - 1]
   );
 }
 
 
 /* =========================================================
-   SHOW RESULT
+   แสดงผลลัพธ์
    ========================================================= */
 
 function showResult() {
-  const result = getResult(totalScore);
+
+  const result =
+    getResult(totalScore);
 
   const percentage =
-    Math.round((totalScore / 35) * 100);
+    Math.round(
+      (totalScore / 35) * 100
+    );
 
   saveMoodHistory(result);
 
@@ -453,18 +626,41 @@ function showResult() {
         <div class="result-info">
 
           <div class="info-box">
-            <strong>สภาพอากาศ</strong>
-            <span>${result.label}</span>
+
+            <strong>
+              สภาพอากาศ
+            </strong>
+
+            <span>
+              ${result.label}
+            </span>
+
           </div>
 
-          <div class="info-box">
-            <strong>คะแนน</strong>
-            <span>${totalScore} / 35</span>
-          </div>
 
           <div class="info-box">
-            <strong>วันนี้</strong>
-            <span>เช็กอินแล้ว ✨</span>
+
+            <strong>
+              คะแนน
+            </strong>
+
+            <span>
+              ${totalScore} / 35
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <strong>
+              วันนี้
+            </strong>
+
+            <span>
+              เช็กอินแล้ว ✨
+            </span>
+
           </div>
 
         </div>
@@ -500,34 +696,46 @@ function showResult() {
     </section>
   `);
 
-  createWeatherEffect(result.type);
+  createWeatherEffect(
+    result.type
+  );
 }
 
 
 /* =========================================================
-   SAVE HISTORY
+   บันทึกประวัติ
    ========================================================= */
 
 function saveMoodHistory(result) {
+
   const history =
     JSON.parse(
-      localStorage.getItem("moodHistory") || "[]"
+      localStorage.getItem(
+        "moodHistory"
+      ) || "[]"
     );
 
   history.unshift({
+
     score: totalScore,
+
     title: result.title,
+
     icon: result.icon,
+
     label: result.label,
-    date: new Date().toLocaleString("th-TH", {
-      dateStyle: "medium",
-      timeStyle: "short"
-    })
+
+    date:
+      new Date().toLocaleString(
+        "th-TH",
+        {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }
+      )
+
   });
 
-  /*
-    เก็บไว้สูงสุด 20 ครั้ง
-  */
   history.splice(20);
 
   localStorage.setItem(
@@ -538,15 +746,18 @@ function saveMoodHistory(result) {
 
 
 /* =========================================================
-   HISTORY
+   ประวัติ
    ========================================================= */
 
 function showHistory() {
+
   clearEffects();
 
   const history =
     JSON.parse(
-      localStorage.getItem("moodHistory") || "[]"
+      localStorage.getItem(
+        "moodHistory"
+      ) || "[]"
     );
 
   document.body.className =
@@ -554,19 +765,36 @@ function showHistory() {
       ? "history-page light"
       : "history-page";
 
+
+  /* ไม่มีประวัติ */
+
   if (history.length === 0) {
+
     render(`
       <section class="history-wrap">
 
         <div class="section-title">
-          <h1>ประวัติของใจ</h1>
+
+          <h1>
+            ประวัติของใจ
+          </h1>
+
           <p>
-            ผลลัพธ์ที่พี่เคยเช็กอินไว้
+            ทุกครั้งที่เช็กอิน
+            คือเวลาสั้น ๆ ที่ได้กลับมาฟังตัวเอง
           </p>
+
         </div>
 
+
         <div class="empty-state">
-          <div style="font-size: 3rem; margin-bottom: 15px;">
+
+          <div
+            style="
+              font-size: 3rem;
+              margin-bottom: 15px;
+            "
+          >
             ☁️
           </div>
 
@@ -574,8 +802,13 @@ function showHistory() {
             ยังไม่มีประวัติ
           </div>
 
-          <div style="margin-top: 8px;">
-            ลองเช็กอากาศในใจครั้งแรกกันไหม?
+          <div
+            style="
+              margin-top: 8px;
+            "
+          >
+            ลองใช้เวลาสักครู่
+            เพื่อกลับมาฟังหัวใจตัวเองนะ
           </div>
 
           <button
@@ -583,7 +816,7 @@ function showHistory() {
             style="margin-top: 22px;"
             onclick="startMood()"
           >
-            เริ่มเลย ✨
+            เริ่มเช็กอิน ✨
           </button>
 
         </div>
@@ -594,6 +827,8 @@ function showHistory() {
     return;
   }
 
+
+  /* มีประวัติ */
 
   render(`
     <section class="history-wrap">
@@ -606,7 +841,8 @@ function showHistory() {
 
         <p>
           ทุกครั้งที่เช็กอิน
-          คือข้อมูลเล็ก ๆ ที่ช่วยให้เราเห็นตัวเองมากขึ้น
+          คือข้อมูลเล็ก ๆ
+          ที่ช่วยให้เราเห็นตัวเองมากขึ้น
         </p>
 
       </div>
@@ -617,6 +853,7 @@ function showHistory() {
         ${history
           .map(
             item => `
+
               <div class="history-item">
 
                 <div class="history-icon">
@@ -630,7 +867,9 @@ function showHistory() {
                   </strong>
 
                   <span>
-                    ${item.label} · ${item.date}
+                    ${item.label}
+                    ·
+                    ${item.date}
                   </span>
 
                 </div>
@@ -640,6 +879,7 @@ function showHistory() {
                 </div>
 
               </div>
+
             `
           )
           .join("")}
@@ -660,30 +900,37 @@ function showHistory() {
 
 
 /* =========================================================
-   CLEAR HISTORY
+   ล้างประวัติ
    ========================================================= */
 
 function clearHistory() {
+
   const confirmed =
-    confirm("ต้องการล้างประวัติทั้งหมดหรือไม่?");
+    confirm(
+      "ต้องการล้างประวัติทั้งหมดหรือไม่?"
+    );
 
   if (!confirmed) return;
 
-  localStorage.removeItem("moodHistory");
+  localStorage.removeItem(
+    "moodHistory"
+  );
 
   showHistory();
 }
 
 
 /* =========================================================
-   SHARE RESULT
+   แชร์ผลลัพธ์
    ========================================================= */
 
 async function shareResult() {
-  const result = getResult(totalScore);
+
+  const result =
+    getResult(totalScore);
 
   const text =
-    `วันนี้สภาพอากาศในใจของฉันคือ ${result.title} ${result.icon}\n` +
+    `วันนี้สภาพอากาศในใจของฉันคือ ${result.title} ${result.icon}\n\n` +
     `คะแนน ${totalScore}/35\n\n` +
     `${result.message}\n\n` +
     `Mood Weather — สภาพอากาศของใจ`;
@@ -697,27 +944,37 @@ async function shareResult() {
         text: text
       });
 
-    } else if (navigator.clipboard) {
+    }
 
-      await navigator.clipboard.writeText(text);
+    else if (navigator.clipboard) {
 
-      alert("คัดลอกผลลัพธ์แล้ว ✨");
+      await navigator.clipboard.writeText(
+        text
+      );
 
-    } else {
+      alert(
+        "คัดลอกข้อความแล้ว ✨"
+      );
+
+    }
+
+    else {
 
       alert(text);
 
     }
 
-  } catch (error) {
+  }
 
-    /*
-      ผู้ใช้กดยกเลิก Share
-      ไม่ต้องแสดง error
-    */
+  catch (error) {
 
-    if (error.name !== "AbortError") {
+    if (
+      error.name !==
+      "AbortError"
+    ) {
+
       console.error(error);
+
     }
 
   }
@@ -725,18 +982,25 @@ async function shareResult() {
 
 
 /* =========================================================
-   THEME
+   เปลี่ยนธีม
    ========================================================= */
 
 function toggleTheme() {
-  document.body.classList.toggle("light");
+
+  document.body.classList.toggle(
+    "light"
+  );
 
   const isLight =
-    document.body.classList.contains("light");
+    document.body.classList.contains(
+      "light"
+    );
 
   localStorage.setItem(
     "mwTheme",
-    isLight ? "light" : "dark"
+    isLight
+      ? "light"
+      : "dark"
   );
 
   updateThemeButton();
@@ -744,35 +1008,55 @@ function toggleTheme() {
 
 
 /* =========================================================
-   THEME BUTTON
+   ปุ่มเปลี่ยนธีม
    ========================================================= */
 
 function updateThemeButton() {
+
   const button =
-    document.getElementById("themeBtn");
+    document.getElementById(
+      "themeBtn"
+    );
 
   if (!button) return;
 
   const isLight =
-    document.body.classList.contains("light");
+    document.body.classList.contains(
+      "light"
+    );
 
   button.textContent =
-    isLight ? "☀️" : "◐";
+    isLight
+      ? "☀️"
+      : "◐";
 }
 
 
 /* =========================================================
-   LOAD THEME
+   โหลดธีม
    ========================================================= */
 
 function loadTheme() {
+
   const theme =
-    localStorage.getItem("mwTheme");
+    localStorage.getItem(
+      "mwTheme"
+    );
 
   if (theme === "light") {
-    document.body.classList.add("light");
-  } else {
-    document.body.classList.remove("light");
+
+    document.body.classList.add(
+      "light"
+    );
+
+  }
+
+  else {
+
+    document.body.classList.remove(
+      "light"
+    );
+
   }
 
   updateThemeButton();
@@ -784,22 +1068,34 @@ function loadTheme() {
    ========================================================= */
 
 function createParticles() {
+
   const container =
-    document.getElementById("particles");
+    document.getElementById(
+      "particles"
+    );
 
   if (!container) return;
 
   container.innerHTML = "";
 
   const amount =
-    window.innerWidth < 600 ? 18 : 30;
+    window.innerWidth < 600
+      ? 18
+      : 30;
 
-  for (let i = 0; i < amount; i++) {
+  for (
+    let i = 0;
+    i < amount;
+    i++
+  ) {
 
     const particle =
-      document.createElement("span");
+      document.createElement(
+        "span"
+      );
 
-    particle.className = "particle";
+    particle.className =
+      "particle";
 
     particle.style.left =
       `${Math.random() * 100}%`;
@@ -813,7 +1109,9 @@ function createParticles() {
     particle.style.transform =
       `scale(${0.5 + Math.random()})`;
 
-    container.appendChild(particle);
+    container.appendChild(
+      particle
+    );
   }
 }
 
@@ -823,36 +1121,52 @@ function createParticles() {
    ========================================================= */
 
 function createWeatherEffect(type) {
+
   clearEffects();
 
   const card =
-    document.querySelector(".result-card");
+    document.querySelector(
+      ".result-card"
+    );
 
   if (!card) return;
 
   const effect =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
-  effect.className = "weather-effect";
+  effect.className =
+    "weather-effect";
 
   card.appendChild(effect);
 
 
-  /* -------------------------------------------------------
-     RAIN
-     ------------------------------------------------------- */
+  /* ฝน */
 
-  if (type === "rainy" || type === "storm") {
+  if (
+    type === "rainy" ||
+    type === "storm"
+  ) {
 
     const amount =
-      type === "storm" ? 60 : 35;
+      type === "storm"
+        ? 60
+        : 35;
 
-    for (let i = 0; i < amount; i++) {
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
 
       const drop =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
-      drop.className = "rain-drop";
+      drop.className =
+        "rain-drop";
 
       drop.style.left =
         `${Math.random() * 100}%`;
@@ -866,57 +1180,82 @@ function createWeatherEffect(type) {
       drop.style.opacity =
         `${0.2 + Math.random() * 0.6}`;
 
-      effect.appendChild(drop);
+      effect.appendChild(
+        drop
+      );
     }
   }
 
 
-  /* -------------------------------------------------------
-     SUN
-     ------------------------------------------------------- */
+  /* แสงแดด */
 
   if (type === "sunny") {
 
-    for (let i = 0; i < 10; i++) {
+    for (
+      let i = 0;
+      i < 10;
+      i++
+    ) {
 
       const ray =
-        document.createElement("span");
+        document.createElement(
+          "span"
+        );
 
-      ray.className = "sun-ray";
+      ray.className =
+        "sun-ray";
 
       const angle =
         i * 36;
 
-      ray.style.left = "50%";
-      ray.style.top = "50%";
+      ray.style.left =
+        "50%";
+
+      ray.style.top =
+        "50%";
 
       ray.style.transform =
-        `translate(-50%, -50%) rotate(${angle}deg) translateY(-150px)`;
+        `translate(-50%, -50%)
+         rotate(${angle}deg)
+         translateY(-150px)`;
 
       ray.style.animationDelay =
         `${i * -0.2}s`;
 
-      effect.appendChild(ray);
+      effect.appendChild(
+        ray
+      );
     }
   }
 
 
-  /* -------------------------------------------------------
-     RAINBOW
-     ------------------------------------------------------- */
+  /* สีรุ้ง */
 
   if (type === "rainbow") {
 
     const rainbow =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    rainbow.style.position = "absolute";
-    rainbow.style.left = "50%";
-    rainbow.style.top = "50%";
-    rainbow.style.width = "260px";
-    rainbow.style.height = "130px";
+    rainbow.style.position =
+      "absolute";
+
+    rainbow.style.left =
+      "50%";
+
+    rainbow.style.top =
+      "50%";
+
+    rainbow.style.width =
+      "260px";
+
+    rainbow.style.height =
+      "130px";
+
     rainbow.style.transform =
       "translate(-50%, -30%)";
+
     rainbow.style.borderRadius =
       "260px 260px 0 0";
 
@@ -929,47 +1268,59 @@ function createWeatherEffect(type) {
       "0 -54px 0 rgba(100,170,255,.12)," +
       "0 -72px 0 rgba(180,130,255,.12)";
 
-    rainbow.style.pointerEvents = "none";
+    rainbow.style.pointerEvents =
+      "none";
 
-    effect.appendChild(rainbow);
+    effect.appendChild(
+      rainbow
+    );
   }
 }
 
 
 /* =========================================================
-   CLEAR EFFECTS
+   ล้าง Effect
    ========================================================= */
 
 function clearEffects() {
+
   document
-    .querySelectorAll(".weather-effect")
-    .forEach(element => element.remove());
+    .querySelectorAll(
+      ".weather-effect"
+    )
+    .forEach(
+      element =>
+        element.remove()
+    );
 }
 
 
 /* =========================================================
-   INITIALIZE
+   เริ่มต้นระบบ
    ========================================================= */
 
 loadTheme();
+
 showHome();
 
 
 /* =========================================================
-   RESIZE
+   ปรับ PARTICLES ตามขนาดหน้าจอ
    ========================================================= */
 
-window.addEventListener("resize", () => {
+window.addEventListener(
+  "resize",
+  () => {
 
-  /*
-    สร้าง particle ใหม่เมื่อเปลี่ยนขนาดจอ
-    เฉพาะตอนอยู่หน้าหลัก
-  */
+    if (
+      document.body.classList.contains(
+        "home"
+      )
+    ) {
 
-  if (
-    document.body.classList.contains("home")
-  ) {
-    createParticles();
+      createParticles();
+
+    }
+
   }
-
-});
+);
